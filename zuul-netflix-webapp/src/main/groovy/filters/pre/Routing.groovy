@@ -51,11 +51,14 @@ class Routing extends ZuulFilter {
 
 
     Object staticRouting() {
+        // 执行
         FilterProcessor.instance.runFilters("healthcheck")
+        // 执行静态过滤器链
         FilterProcessor.instance.runFilters("static")
     }
 
     Object run() {
+
 
         staticRouting() //runs the static Zuul
 

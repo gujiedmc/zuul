@@ -29,6 +29,8 @@ import org.slf4j.LoggerFactory
 import javax.servlet.http.HttpServletRequest
 
 /**
+ * 事件收集
+ *
  * Collects request data to be sent to ESI, EventBus, Turbine and friends.
  *
  * @author mhawthorne

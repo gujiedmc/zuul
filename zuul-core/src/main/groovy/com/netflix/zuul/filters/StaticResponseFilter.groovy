@@ -23,6 +23,8 @@ import com.netflix.zuul.ZuulFilter
 import com.netflix.zuul.context.RequestContext
 
 /**
+ * 用于直接返回相应体，不走路由规则的处理器
+ *
  * Abstract class to return content directly fron Zuul,
  * If this filter is executed, the  "route" filters will be bypassed,
  * so the request will not be forwarded to an origin.

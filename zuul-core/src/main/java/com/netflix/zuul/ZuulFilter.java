@@ -36,6 +36,9 @@ import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.*;
 
 /**
+ * Zuul处理器抽象实现。
+ * 支持处理器分类和排序。
+ *
  * Base abstract class for ZuulFilters. The base class defines abstract methods to define:
  * filterType() - to classify a filter by type. Standard types in Zuul are "pre" for pre-routing filtering,
  * "route" for routing to an origin, "post" for post-routing filters, "error" for error handling.
@@ -58,6 +61,7 @@ public abstract class ZuulFilter implements IZuulFilter, Comparable<ZuulFilter> 
     private final AtomicReference<DynamicBooleanProperty> filterDisabledRef = new AtomicReference<>();
 
     /**
+     * 处理器类型
      * to classify a filter by type. Standard types in Zuul are "pre" for pre-routing filtering,
      * "route" for routing to an origin, "post" for post-routing filters, "error" for error handling.
      * We also support a "static" type for static responses see  StaticResponseFilter.
@@ -68,6 +72,7 @@ public abstract class ZuulFilter implements IZuulFilter, Comparable<ZuulFilter> 
     abstract public String filterType();
 
     /**
+     * 处理器顺序，越小越靠前
      * filterOrder() must also be defined for a filter. Filters may have the same  filterOrder if precedence is not
      * important for a filter. filterOrders do not need to be sequential.
      *
@@ -104,6 +109,9 @@ public abstract class ZuulFilter implements IZuulFilter, Comparable<ZuulFilter> 
     }
 
     /**
+     * 在当前处理器可以运行的时候，通过调用子类实现的run方法执行业务逻辑，捕捉异常。
+     * 记录执行时间metric。
+     *
      * runFilter checks !isFilterDisabled() and shouldFilter(). The run() method is invoked if both are true.
      *
      * @return the return from ZuulFilterResult
@@ -114,6 +122,7 @@ public abstract class ZuulFilter implements IZuulFilter, Comparable<ZuulFilter> 
             if (shouldFilter()) {
                 Tracer t = TracerFactory.instance().startMicroTracer("ZUUL::" + this.getClass().getSimpleName());
                 try {
+                    // 执行逻辑
                     Object res = run();
                     zr = new ZuulFilterResult(res, ExecutionStatus.SUCCESS);
                 } catch (Throwable e) {

@@ -33,6 +33,9 @@ import java.nio.charset.Charset
 import java.util.zip.GZIPInputStream
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * 向Response中设置响应头和响应体
+ */
 class sendResponse extends ZuulFilter {
 
     static DynamicBooleanProperty INCLUDE_DEBUG_HEADER =

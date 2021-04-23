@@ -139,6 +139,8 @@ public class FilterProcessor {
     }
 
     /**
+     * 通过过滤器类型还行不同的过滤器。
+     *
      * runs all filters of the filterType sType/ Use this method within filters to run custom filters by type
      *
      * @param sType the filterType.
@@ -150,6 +152,7 @@ public class FilterProcessor {
             Debug.addRoutingDebug("Invoking {" + sType + "} type filters");
         }
         boolean bResult = false;
+        // 加载指定类型的全部ZuulFilter
         List<ZuulFilter> list = FilterLoader.getInstance().getFiltersByType(sType);
         if (list != null) {
             for (int i = 0; i < list.size(); i++) {
@@ -164,6 +167,9 @@ public class FilterProcessor {
     }
 
     /**
+     * 执行一个ZuulFilter，会添加一些debug信息。
+     * 捕捉所有的异常信息，并转化为ZuulException以及500响应码。
+     *
      * Processes an individual ZuulFilter. This method adds Debug information. Any uncaught Thowables are caught by this method and converted to a ZuulException with a 500 status code.
      *
      * @param filter
@@ -189,7 +195,7 @@ public class FilterProcessor {
                 Debug.addRoutingDebug("Filter " + filter.filterType() + " " + filter.filterOrder() + " " + filterName);
                 copy = ctx.copy();
             }
-            
+            // 执行过滤器链
             ZuulFilterResult result = filter.runFilter();
             ExecutionStatus s = result.getStatus();
             execTime = System.currentTimeMillis() - ltime;

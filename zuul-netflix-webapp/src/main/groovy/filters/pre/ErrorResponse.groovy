@@ -52,6 +52,12 @@ class ErrorResponse extends ZuulFilter {
     }
 
 
+    /**
+     * 捕捉异常,打印日志。
+     * 如果异常是ZuulException则封装对应的HttpStatus，或者在配置覆写状态时返回200。
+     * 如果是其他异常则封装500或者在配置覆写状态时返回200。
+     * 并根据不同的版本来响应不同的结果，json、xml
+     */
     Object run() {
 
         RequestContext context = RequestContext.currentContext

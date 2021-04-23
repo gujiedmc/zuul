@@ -52,6 +52,9 @@ import java.util.zip.GZIPInputStream
 
 import static HttpRequest.Verb
 
+/**
+ * 基于ribbon执行http请求
+ */
 class ZuulNFRequest extends ZuulFilter {
 
     private static final Logger LOG = LoggerFactory.getLogger(ZuulNFRequest.class);

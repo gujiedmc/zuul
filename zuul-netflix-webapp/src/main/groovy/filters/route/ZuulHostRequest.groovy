@@ -60,6 +60,9 @@ import javax.servlet.http.HttpServletResponse
 import java.util.concurrent.atomic.AtomicReference
 import java.util.zip.GZIPInputStream
 
+/**
+ * 基于Apache HttpClient执行http请求。
+ */
 class ZuulHostRequest extends ZuulFilter {
 
     public static final String CONTENT_ENCODING = "Content-Encoding";

@@ -18,6 +18,8 @@ package com.netflix.zuul;
 import com.netflix.zuul.exception.ZuulException;
 
 /**
+ * Zuul处理器定义
+ *
  * BAse interface for ZuulFilters
  *
  * @author Mikey Cohen
@@ -26,6 +28,8 @@ import com.netflix.zuul.exception.ZuulException;
  */
 public interface IZuulFilter {
     /**
+     * 标记当前ZuulFilter是否应该被执行。
+     *
      * a "true" return from this method means that the run() method should be invoked
      *
      * @return true if the run() method should be invoked. false will not invoke the run() method
@@ -33,6 +37,7 @@ public interface IZuulFilter {
     boolean shouldFilter();
 
     /**
+     * 如果当前处理器允许执行，则执行业务逻辑
      * if shouldFilter() is true, this method will be invoked. this method is the core method of a ZuulFilter
      *
      * @return Some arbitrary artifact may be returned. Current implementation ignores it.

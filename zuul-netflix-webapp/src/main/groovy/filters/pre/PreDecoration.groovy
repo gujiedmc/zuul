@@ -52,6 +52,11 @@ public class PreDecoration extends ZuulFilter {
         return true
     }
 
+    /**
+     * 设置url，开启响应压缩
+     * 设置请求头转发，并添加自定义请求头
+     * @return
+     */
     @Override
     Object run() {
         if (RequestContext.currentContext.getRequest().getParameter("url") != null) {

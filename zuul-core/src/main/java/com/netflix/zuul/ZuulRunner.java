@@ -35,6 +35,9 @@ import static org.mockito.Mockito.*;
 
 
 /**
+ * 将HttpServletRequest和HttpServletResponse初始化到RequestContext中，
+ * 并通过FilterProcessor执行preRoute(), route(),  postRoute(), 和 error()4个方法。
+ *
  * This class initializes servlet requests and responses into the RequestContext and wraps the FilterProcessor calls
  * to preRoute(), route(),  postRoute(), and error() methods
  *

@@ -33,6 +33,9 @@ import javax.servlet.http.HttpServletResponse
 
 import static com.netflix.zuul.constants.ZuulHeaders.*
 
+/**
+ * 添加Zuul相关响应头
+ */
 class Postfilter extends ZuulFilter {
 
     Postfilter() {

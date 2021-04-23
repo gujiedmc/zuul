@@ -44,6 +44,10 @@ class DebugFilter extends ZuulFilter {
 
     }
 
+    /**
+     * 开启debug模式
+     * @return
+     */
     Object run() {
         RequestContext.getCurrentContext().setDebugRequest(true)
         RequestContext.getCurrentContext().setDebugRouting(true)

@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
+ * 收集HttpStatus信息
+ *
  * @author Mikey Cohen
  * Date: 2/3/12
  * Time: 2:48 PM

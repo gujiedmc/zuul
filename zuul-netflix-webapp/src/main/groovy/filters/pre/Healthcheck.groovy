@@ -30,6 +30,8 @@ import com.netflix.zuul.context.RequestContext
 import com.netflix.zuul.filters.StaticResponseFilter
 
 /**
+ * 用于对外暴露检测zuul服务是否正常的处理器，静态的，直接响应html页面，不走路由。
+ *
  * @author Mikey Cohen
  * Date: 2/1/12
  * Time: 7:56 AM

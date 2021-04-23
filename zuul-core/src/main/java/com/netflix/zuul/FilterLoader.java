@@ -42,6 +42,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
+ * zuul的核心类之一，监听ZuulFilter源码修改，动态加载、编译，并存入到缓存中。
+ * 这里需要提一点的是，zuul默认使用groovy实现ZuulFilter。通过{@link #putFilter(File)}方法加载源码
+ * 然后通过 {@link DynamicCodeCompiler}编译器对源码进行编译，然后将其存放到缓存 {@link #hashFiltersByType} Map中。
+ *
  * This class is one of the core classes in Zuul. It compiles, loads from a File, and checks if source code changed.
  * It also holds ZuulFilters by filterType.
  *
@@ -50,17 +54,21 @@ import static org.mockito.Mockito.when;
  *         Time: 1:59 PM
  */
 public class FilterLoader {
+    // 单例
     final static FilterLoader INSTANCE = new FilterLoader();
 
     private static final Logger LOG = LoggerFactory.getLogger(FilterLoader.class);
 
+    // 缓存
     private final ConcurrentHashMap<String, Long> filterClassLastModified = new ConcurrentHashMap<String, Long>();
     private final ConcurrentHashMap<String, String> filterClassCode = new ConcurrentHashMap<String, String>();
     private final ConcurrentHashMap<String, String> filterCheck = new ConcurrentHashMap<String, String>();
+    // 分组缓存动态加载的ZuulFilter
     private final ConcurrentHashMap<String, List<ZuulFilter>> hashFiltersByType = new ConcurrentHashMap<String, List<ZuulFilter>>();
 
     private FilterRegistry filterRegistry = FilterRegistry.instance();
 
+    // 源码动态编译器，默认使用groovy
     static DynamicCodeCompiler COMPILER;
     
     static FilterFactory FILTER_FACTORY = new DefaultFilterFactory();
@@ -96,11 +104,12 @@ public class FilterLoader {
     }
 
     /**
+     * 通过字符串的形式动态加载
      * Given source and name will compile and store the filter if it detects that the filter code has changed or
      * the filter doesn't exist. Otherwise it will return an instance of the requested ZuulFilter
      *
-     * @param sCode source code
-     * @param sName name of the filter
+     * @param sCode source code 源码
+     * @param sName name of the filter 过滤器名称
      * @return the ZuulFilter
      * @throws IllegalAccessException
      * @throws InstantiationException
@@ -134,6 +143,8 @@ public class FilterLoader {
 
 
     /**
+     * 从源码中动态加载ZuulFilter，编译并添加到处理器注册表中。
+     *
      * From a file this will read the ZuulFilter source code, compile it, and add it to the list of current filters
      * a true response means that it was successful.
      *
@@ -168,6 +179,8 @@ public class FilterLoader {
     }
 
     /**
+     * 动态加载指定类型的全部处理器
+     *
      * Returns a list of filters by the filterType specified
      *
      * @param filterType
